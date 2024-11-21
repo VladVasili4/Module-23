@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Просмотр фотографий</title>
+</head>
+<body>
+    <h1>Фотографии</h1>
+    <div>
+        {% for photo in photos %}
+        <div>
+            <img src="/photo/{{ photo.id }}" alt="Фото {{ photo.id }}" style="max-width: 300px; height: auto;">
+            <p>{{ photo.description }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
