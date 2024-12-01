@@ -67,7 +67,7 @@
         {% for photo in photos %}
         <div class="photo-item">
             <!-- Фото -->
-            <img src="{{ photo.url }}" alt="Фото">
+            <img src="/uploads/{{ photo.filename }}" alt="Фото {{ photo.id }}">
 
             <!-- Комментарии и форма добавления -->
             <div class="comments-section">

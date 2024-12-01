@@ -9,6 +9,7 @@ from datetime import date, datetime, timedelta
 import os
 from jose import JWTError, jwt
 from fastapi.security import OAuth2PasswordBearer
+from fastapi.staticfiles import StaticFiles
 
 
 
@@ -23,6 +24,8 @@ templates = Jinja2Templates(directory="app/templates")
 
 UPLOAD_DIR = "uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
+
+app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 
 
 # Получение текущей сессии
@@ -85,22 +88,6 @@ async def view_photos(request: Request, db: Session = Depends(get_db)):
     )
 
 
-
-# # @app.get("/photos", response_class=HTMLResponse)
-# # async def view_photos(request: Request, db: Session = Depends(get_db)):
-# #     photos = crud.get_photos(db)
-# #     return templates.TemplateResponse("photos.html", {"request": request, "photos": photos})
-#
-#
-# @app.get("/photos", response_class=HTMLResponse)
-# async def view_photos(request: Request, db: Session = Depends(get_db), current_user: schemas.User = Depends(get_current_user)):
-#     photos = crud.get_photos(db)
-#     return templates.TemplateResponse("photos.html", {"request": request, "photos": photos, "current_user": current_user})
-
-
-
-
-
 @app.post("/photos")
 async def upload_photo(
     db: Session = Depends(get_db),
@@ -140,17 +127,4 @@ async def add_comment(
     return {"comment_id": comment.id, "message": "Comment added successfully"}
 
 
-
-
-
-
-
-# @app.post("/photos/{photo_id}/comments")
-# async def add_comment(
-#     photo_id: int,
-#     comment: schemas.CommentCreate,
-#     db: Session = Depends(get_db),
-#     user_id: int = Form(...)
-# ):
-#     return crud.add_comment(db, comment, user_id=user_id, photo_id=photo_id)
 
